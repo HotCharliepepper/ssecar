@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  SSECAR · 차량관리 전문 — 검색·신뢰 화면 정비 제안서 (1차본)
+  Weplace / Mashcore
+  ------------------------------------------------------------
+  이미지 교체 방법:
+  아래 .ph 플레이스홀더의 data-file 값(예: assets/ssecar-01.jpg)에
+  실제 이미지를 넣을 때는, 해당 <figure class="ph"> 블록 전체를
+  <img src="assets/ssecar-01.jpg" class="img"> 로 교체하거나,
+  .ph-inner 에 background-image 를 지정하면 됩니다.
+  ============================================================
+-->
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>쌔카 차량관리 — 검색·신뢰 화면 정비 제안</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+<style>
+:root{
+  --bg:#0A0E14;
+  --bg-2:#0C111A;
+  --surface:#141A24;
+  --surface-2:#10151E;
+  --panel-a:#161D28;
+  --panel-b:#10151E;
+
+  --line:rgba(184,200,219,.09);
+  --line-2:rgba(184,200,219,.16);
+
+  --text:#E9E5DD;        /* warm off-white */
+  --text-dim:#ADA89C;    /* warm gray */
+  --muted:#79828E;       /* cool steel */
+  --muted-2:#59616C;
+
+  --silver:#C3CDDA;      /* platinum accent */
+  --silver-hi:#E8EDF3;
+  --silver-lo:#8B96A4;
+  --silver-deep:#6E7884;
+
+  --maxw:600px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  font-family:"Pretendard",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.75;
+  letter-spacing:-.01em;
+  word-break:keep-all;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ambient depth + faint grain */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(1100px 680px at 88% -6%, rgba(120,150,185,.10), transparent 60%),
+    radial-gradient(900px 620px at -5% 30%, rgba(22,30,44,.55), transparent 58%),
+    radial-gradient(1000px 760px at 100% 102%, rgba(120,150,185,.05), transparent 60%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap{position:relative;z-index:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 26px;}
+section{position:relative;z-index:1;}
+
+/* type */
+.serif{font-family:"Noto Serif KR",serif;}
+.eng{font-family:"Cormorant Garamond",serif;}
+.kicker{
+  font-size:11px;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--silver);font-weight:600;margin-bottom:24px;
+  display:flex;align-items:center;gap:12px;
+}
+.kicker::before{content:"";width:26px;height:1px;background:var(--silver-deep);opacity:.8;}
+
+h1,h2,h3{font-family:"Noto Serif KR",serif;font-weight:500;letter-spacing:-.02em;line-height:1.34;text-wrap:balance;}
+.lead,.note,.sub,.cd,.desc,.fa,.bd,.asum,.qline,.ds,.de,.rd,.sdd{text-wrap:pretty;}
+h2{font-size:26px;color:var(--text);font-weight:400;}
+.lead{font-size:16px;color:var(--text-dim);font-weight:300;line-height:1.85;}
+.note{font-size:14.5px;color:var(--text-dim);font-weight:300;line-height:1.85;}
+.small{font-size:13px;color:var(--muted);line-height:1.7;}
+.sv{color:var(--silver-hi);}
+.chrome{
+  background:linear-gradient(100deg,#9aa6b4 0%,#eef2f7 28%,#aab4c2 52%,#f2f5f9 74%,#9aa6b4 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* reveal (restrained) */
+.r{opacity:0;transform:translateY(20px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+.r.in{opacity:1;transform:none;}
+.r.d1{transition-delay:.07s}.r.d2{transition-delay:.14s}.r.d3{transition-delay:.21s}.r.d4{transition-delay:.28s}
+
+/* dividers + rhythm */
+.hr{height:1px;background:linear-gradient(90deg,transparent,var(--line-2),transparent);margin:0 auto;max-width:var(--maxw);}
+.gap-l{height:124px}.gap-m{height:86px}.gap-s{height:50px}
+.block{padding:92px 0;}
+
+/* ============ IMAGE PLACEHOLDERS ============ */
+.ph{display:block;width:100%;border-radius:16px;overflow:hidden;
+  border:1px dashed var(--line-2);background:linear-gradient(155deg,#131922,#0D121A);}
+.ph-inner{aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px;
+  background:
+    repeating-linear-gradient(135deg,rgba(184,200,219,.018) 0 12px,transparent 12px 24px);}
+.ph.wide .ph-inner{aspect-ratio:16/10;}
+.ph.tall .ph-inner{aspect-ratio:3/4;}
+.ph.sq .ph-inner{aspect-ratio:1/1;}
+.ph-ic{width:34px;height:34px;stroke:var(--silver-deep);fill:none;stroke-width:1.3;opacity:.85;}
+.ph-name{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:15px;color:var(--silver-lo);letter-spacing:.02em;}
+.ph-cap{font-size:12px;color:var(--muted);max-width:80%;line-height:1.55;}
+.ph-tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--silver-deep);font-weight:600;}
+.bleed{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);max-width:100vw;}
+.bleed .ph{border-radius:0;border-left:0;border-right:0;}
+
+/* ===== HERO ===== */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:88px 0 64px;
+  background-image:linear-gradient(180deg,rgba(10,14,20,.74),rgba(10,14,20,.90) 72%,var(--bg)),url('assets/ssecar-bg-hero.jpg');
+  background-size:cover;background-position:center;}
+.brandline{font-size:12px;letter-spacing:.5em;color:var(--silver);text-transform:uppercase;margin-bottom:44px;font-weight:600;}
+.hero h1{font-size:39px;line-height:1.32;font-weight:400;}
+.hero h1 .b{color:var(--muted);font-weight:300;}
+.hero .sub{margin-top:30px;font-size:15.5px;color:var(--text-dim);font-weight:300;line-height:1.85;max-width:440px;}
+.hero .tag{margin-top:52px;display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.05em;color:var(--muted);}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--silver);box-shadow:0 0 12px rgba(195,205,218,.7);}
+.scrollcue{margin-top:58px;font-size:11px;letter-spacing:.32em;color:var(--muted-2);text-transform:uppercase;display:flex;align-items:center;gap:10px;}
+.scrollcue .ln{width:1px;height:34px;background:linear-gradient(var(--silver-deep),transparent);}
+
+/* anchor sections */
+.anchor h2{line-height:1.45;}
+
+/* cards */
+.card{background:linear-gradient(160deg,var(--panel-a),var(--panel-b));border:1px solid var(--line);border-radius:16px;padding:25px 23px;}
+
+/* asset / gap facts */
+.facts{display:flex;flex-direction:column;gap:1px;border-radius:16px;overflow:hidden;border:1px solid var(--line);}
+.fact{background:linear-gradient(160deg,var(--panel-a),var(--panel-b));padding:19px 22px;display:flex;gap:15px;align-items:flex-start;}
+.fact .ix{font-family:"Cormorant Garamond",serif;font-size:19px;color:var(--silver);min-width:24px;line-height:1.4;font-style:italic;}
+.fact .tt{font-size:14.5px;color:var(--text);font-weight:500;}
+.fact .ds{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.6;}
+.fact.keep .tt{color:var(--silver-hi);}
+.fact.lack .ix{color:var(--silver-deep);}
+
+/* customer questions */
+.qcol{display:flex;flex-direction:column;gap:13px;}
+.qline{border-left:2px solid var(--silver-deep);padding:5px 0 5px 19px;font-family:"Noto Serif KR",serif;font-size:17px;color:var(--text);font-weight:400;}
+.qline span{display:block;font-family:"Pretendard";font-size:12.5px;color:var(--muted);font-weight:400;margin-top:5px;letter-spacing:0;}
+
+/* interactive customer funnel (scoped .cfn — avoids .flow collision) */
+.cfn{width:100%;position:relative;}
+.cfn__in{max-width:560px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.cfn__switch{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:rgba(195,205,218,.05);border:1px solid var(--line-2);margin-bottom:40px;}
+.cfn__switch button{font-family:"Pretendard",sans-serif;font-size:14px;font-weight:600;color:var(--text-dim);background:transparent;border:none;cursor:pointer;padding:9px 22px;border-radius:999px;-webkit-appearance:none;appearance:none;transition:background .28s ease,color .28s ease;}
+.cfn__switch button[data-state="dim"][aria-pressed="true"]{background:rgba(195,205,218,.10);color:var(--text);}
+.cfn__switch button[data-state="clear"][aria-pressed="true"]{background:linear-gradient(145deg,#aeb9c7,#e6ebf1);color:#0e1118;}
+.cfn__switch button:focus-visible{outline:2px solid var(--silver);outline-offset:2px;}
+.cfn__stages{list-style:none;width:100%;max-width:440px;display:flex;flex-direction:column;gap:11px;}
+.cfn__stage{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.cfn__bar{width:var(--wd);height:46px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:linear-gradient(100deg,rgba(195,205,218,.16),rgba(195,205,218,.07));border:1px solid var(--line-2);transition:width .5s cubic-bezier(.3,.7,.2,1),background .4s ease,border-color .4s ease;}
+.cfn__stages.is-clear .cfn__bar{width:var(--wc);}
+.cfn__name{font-family:"Noto Serif KR",serif;font-size:14.5px;font-weight:600;color:var(--text);white-space:nowrap;letter-spacing:-.01em;}
+.cfn__leak{font-size:11.5px;color:var(--muted-2);height:1.1em;line-height:1.1em;opacity:1;transition:opacity .35s ease;}
+.cfn__stages.is-clear .cfn__leak{opacity:0;}
+.cfn__stage--goal .cfn__bar{background:linear-gradient(100deg,rgba(195,205,218,.12),rgba(140,165,195,.10));}
+.cfn__stages.is-clear .cfn__stage--goal .cfn__bar{background:linear-gradient(90deg,#8b96a4,#e2e8ef);border-color:transparent;box-shadow:0 12px 32px -12px rgba(140,165,195,.55);}
+.cfn__stages.is-clear .cfn__stage--goal .cfn__name{color:#0e1118;}
+.cfn__cap{position:relative;height:2.8em;margin-top:40px;width:100%;max-width:30em;}
+.cfn__cap p{position:absolute;inset:0;font-family:"Noto Serif KR",serif;font-size:clamp(16px,3.6vw,20px);line-height:1.5;letter-spacing:-.01em;transition:opacity .4s ease;}
+.cfn__cap .capdim{opacity:1;color:var(--text-dim);}
+.cfn__cap .capclear{opacity:0;color:var(--silver-hi);}
+.cfn__cap .capclear b{color:var(--silver);font-weight:500;}
+.cfn__cap.is-clear .capdim{opacity:0;}
+.cfn__cap.is-clear .capclear{opacity:1;}
+@media(max-width:600px){
+  .cfn__bar{height:42px;}
+  .cfn__name{font-size:13.5px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .cfn__bar,.cfn__leak,.cfn__cap p,.cfn__switch button{transition:none;}
+}
+
+/* AI mock */
+.aimock{background:linear-gradient(165deg,#11161F,#0B0F17);border:1px solid var(--line-2);border-radius:18px;padding:18px 16px 20px;box-shadow:0 30px 60px -34px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.03);}
+.aibar{display:flex;align-items:center;gap:8px;padding:2px 4px 14px;border-bottom:1px solid var(--line);}
+.aibar .dotr{width:9px;height:9px;border-radius:50%;}
+.r1{background:#4a5563}.r2{background:#333c47}.r3{background:#252c34}
+.aibar .ttl{margin-left:8px;font-size:11px;letter-spacing:.18em;color:var(--muted-2);text-transform:uppercase;}
+.uq{margin:16px 2px 18px;display:flex;justify-content:flex-end;}
+.uq .b{background:#1b2330;border:1px solid var(--line);color:var(--text-dim);font-size:13.5px;padding:11px 15px;border-radius:14px 14px 4px 14px;max-width:86%;}
+.ans{display:flex;gap:12px;align-items:flex-start;margin:0 2px;}
+.ans .avt{width:26px;height:26px;border-radius:50%;flex:none;background:radial-gradient(circle at 35% 30%,var(--silver-hi),var(--silver-deep));box-shadow:0 0 14px rgba(195,205,218,.35);}
+.ans .body{font-size:13.5px;color:var(--text-dim);line-height:1.75;}
+.ans .body .h{color:var(--text);font-weight:600;}
+.airec{margin-top:11px;display:flex;flex-direction:column;gap:8px;}
+.airow{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-dim);}
+.airow .n{font-family:"Cormorant Garamond",serif;font-style:italic;color:var(--silver);min-width:14px;}
+.airow b{color:var(--text);font-weight:600;}
+.src{margin-top:13px;display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--silver-lo);background:rgba(195,205,218,.06);border:1px solid var(--line);border-radius:9px;padding:7px 11px;}
+.cursor{display:inline-block;width:7px;height:14px;background:var(--silver);vertical-align:-2px;margin-left:3px;animation:blink 1.1s steps(1) infinite;}
+@keyframes blink{50%{opacity:0}}
+.mocknote{margin-top:14px;font-size:11px;color:var(--muted-2);line-height:1.6;}
+
+/* flow */
+.flow{display:flex;flex-direction:column;margin-top:6px;}
+.fstep{display:flex;gap:17px;align-items:flex-start;padding:3px 0;}
+.frail{display:flex;flex-direction:column;align-items:center;min-width:40px;}
+.fnode{width:40px;height:40px;border-radius:11px;flex:none;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,var(--surface),#0E131C);border:1px solid var(--line-2);}
+.fnode svg{width:19px;height:19px;stroke:var(--silver);fill:none;stroke-width:1.5;}
+.fconn{width:1px;flex:1;min-height:28px;background:linear-gradient(var(--line-2),var(--line));margin:6px 0;}
+.fbody{padding-bottom:24px;flex:1;}
+.fbody .lb{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--silver);font-weight:600;}
+.fbody .ti{font-family:"Noto Serif KR";font-size:16px;color:var(--text);margin-top:5px;}
+.fbody .de{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.6;}
+.fstep.last .fnode{background:linear-gradient(150deg,#aeb9c7,#697381);border-color:var(--silver);}
+.fstep.last .fnode svg{stroke:#0c1118;}
+
+/* portfolio grid */
+.pf-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.pf-grid .ph .ph-inner{aspect-ratio:1/1;gap:7px;padding:14px;}
+.pf-grid .ph-ic{width:24px;height:24px;}
+.pf-grid .ph-name{font-size:12px;}
+.pf-grid .ph-cap{font-size:10.5px;}
+
+/* before/after split */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ba .ph .ph-inner{aspect-ratio:3/4;}
+
+/* stat strip */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.stat{background:linear-gradient(160deg,var(--panel-a),var(--panel-b));border:1px solid var(--line);border-radius:14px;padding:20px 14px;text-align:center;}
+.stat .sn{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:600;color:var(--silver-hi);line-height:1;}
+.stat .sn .u{font-size:15px;color:var(--silver);margin-left:2px;}
+.stat .sl{font-size:11.5px;color:var(--text-dim);margin-top:10px;line-height:1.4;}
+
+/* market data cards */
+.data{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.dcard{background:linear-gradient(160deg,var(--panel-a),var(--panel-b));border:1px solid var(--line);border-radius:15px;padding:22px 18px;}
+.dcard.wide{grid-column:1 / -1;}
+.dnum{font-family:"Cormorant Garamond",serif;font-size:36px;font-weight:600;color:var(--silver-hi);line-height:1;letter-spacing:-.01em;}
+.dnum .u{font-size:16px;color:var(--silver);margin-left:3px;}
+.dlb{font-size:12.5px;color:var(--text-dim);margin-top:11px;font-weight:500;}
+.dsrc{font-size:10.5px;color:var(--muted-2);margin-top:5px;letter-spacing:.01em;line-height:1.5;}
+
+/* channel section status/fix */
+.chan{display:flex;flex-direction:column;gap:12px;}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.04em;font-weight:600;padding:5px 11px;border-radius:20px;}
+.chip.ok{color:#bfe3d0;background:rgba(120,200,160,.08);border:1px solid rgba(120,200,160,.18);}
+.chip.gap{color:var(--silver-hi);background:rgba(195,205,218,.07);border:1px solid var(--line-2);}
+.fixlist{list-style:none;display:flex;flex-direction:column;gap:9px;margin-top:4px;}
+.fixlist li{font-size:13.5px;color:var(--text-dim);padding-left:19px;position:relative;line-height:1.6;}
+.fixlist li::before{content:"";position:absolute;left:2px;top:9px;width:5px;height:5px;border-radius:50%;background:var(--silver-deep);}
+
+/* two plan boxes */
+.plan{display:flex;flex-direction:column;gap:15px;}
+.pbox{border-radius:16px;padding:23px 21px;border:1px solid var(--line);background:linear-gradient(160deg,var(--panel-a),var(--panel-b));}
+.pbox.ext{border-color:var(--line-2);background:linear-gradient(160deg,#19212d,#0E141D);}
+.pbox .pk{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--muted);}
+.pbox.ext .pk{color:var(--silver);}
+.pbox .ph2{font-family:"Noto Serif KR";font-size:17px;color:var(--text);margin-top:8px;}
+.pbox ul{list-style:none;margin-top:15px;display:flex;flex-direction:column;gap:9px;}
+.pbox li{font-size:13.5px;color:var(--text-dim);padding-left:19px;position:relative;line-height:1.55;}
+.pbox li::before{content:"";position:absolute;left:2px;top:9px;width:5px;height:5px;border-radius:50%;background:var(--silver-deep);}
+.pbox.ext li::before{background:var(--silver);}
+.pbox li b{color:var(--text);font-weight:600;}
+.chev{text-align:center;color:var(--silver-deep);font-size:18px;margin:-4px 0;}
+
+/* roadmap */
+.road{display:flex;flex-direction:column;}
+.rstep{display:flex;gap:15px;padding-bottom:6px;}
+.rrail{display:flex;flex-direction:column;align-items:center;min-width:62px;}
+.rtag{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:15px;color:var(--silver);padding-top:2px;white-space:nowrap;}
+.rdot{width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--silver-deep);margin-top:8px;}
+.rconn{width:2px;flex:1;min-height:32px;background:var(--line);margin:4px 0;}
+.rbody{padding-bottom:26px;flex:1;}
+.rbody .rt{font-family:"Noto Serif KR";font-size:15.5px;color:var(--text);}
+.rbody .rd{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.7;}
+
+/* pricing anchor table */
+.atable{border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+.arow{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:15px 18px;background:linear-gradient(160deg,var(--panel-a),var(--panel-b));border-top:1px solid var(--line);font-size:13.5px;}
+.arow:first-child{border-top:0;}
+.arow .ak{color:var(--text-dim);}
+.arow .av{color:var(--silver-hi);font-weight:600;white-space:nowrap;font-size:13px;}
+.asum{margin-top:14px;border:1px solid var(--line-2);border-radius:14px;background:linear-gradient(160deg,#19212d,#0E141D);padding:18px 20px;font-size:13.5px;color:var(--text-dim);line-height:1.75;}
+.asum b{color:var(--silver-hi);}
+
+/* pricing tiers */
+.tiers{display:flex;flex-direction:column;gap:16px;margin-top:6px;}
+.tier{border-radius:18px;padding:25px 23px;border:1px solid var(--line);background:linear-gradient(160deg,var(--panel-a),var(--panel-b));position:relative;}
+.tier.rec{border:1px solid var(--silver-lo);background:linear-gradient(165deg,#1b2530,#0E141D);box-shadow:0 40px 80px -44px rgba(140,165,195,.35);}
+.tier .badge{position:absolute;top:-11px;left:23px;background:linear-gradient(90deg,#8b96a4,#dfe5ec);color:#0d1118;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:5px 13px;border-radius:20px;}
+.tier .tg{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+.tier.rec .tg{color:var(--silver);}
+.tier .tn{font-family:"Noto Serif KR";font-size:18px;color:var(--text);margin-top:9px;line-height:1.4;}
+.tier .price{margin-top:16px;display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;}
+.tier .price .amt{font-family:"Cormorant Garamond",serif;font-size:37px;font-weight:600;color:var(--text);line-height:1;}
+.tier.rec .price .amt{color:var(--silver-hi);}
+.tier .price .per{font-size:13px;color:var(--text-dim);}
+.tier .price .vat{font-size:12.5px;color:var(--muted);}
+.tier .pay{margin-top:10px;font-size:12.5px;color:var(--silver);background:rgba(195,205,218,.07);border:1px solid var(--line);border-radius:10px;padding:9px 12px;display:inline-block;}
+.tier .desc{margin-top:14px;font-size:13.5px;color:var(--text-dim);line-height:1.7;}
+.tier ul{list-style:none;margin-top:15px;display:flex;flex-direction:column;gap:8px;}
+.tier li{font-size:13px;color:var(--text-dim);padding-left:19px;position:relative;line-height:1.55;}
+.tier li::before{content:"";position:absolute;left:2px;top:8px;width:5px;height:5px;border-radius:50%;background:var(--silver-deep);}
+.tier.rec li::before{background:var(--silver);}
+.tier li.inc{color:var(--muted);}
+.tier li.inc::before{background:var(--muted-2);}
+
+/* bonus */
+.bonus{border-radius:18px;border:1px solid var(--line-2);background:linear-gradient(160deg,#19212d,#0C111A);padding:27px 23px;}
+.bonus .bk{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--silver);font-weight:600;}
+.bonus .bh{font-family:"Noto Serif KR";font-size:20px;color:var(--text);margin-top:12px;line-height:1.45;}
+.bonus .bd{font-size:13.5px;color:var(--text-dim);margin-top:13px;line-height:1.75;}
+
+/* expected effects */
+.eff{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.ecard{background:linear-gradient(160deg,var(--panel-a),var(--panel-b));border:1px solid var(--line);border-radius:15px;padding:20px 18px;}
+.ecard .et{font-family:"Noto Serif KR";font-size:15px;color:var(--silver-hi);}
+.ecard .ed{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.65;}
+
+/* seasonal strategy cards */
+.season{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.scard{background:linear-gradient(160deg,var(--panel-a),var(--panel-b));border:1px solid var(--line);border-radius:15px;padding:20px 18px;}
+.scard.hot{border-color:var(--line-2);background:linear-gradient(160deg,#19212d,#0E141D);}
+.scard .sk{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+.scard.hot .sk{color:var(--silver);}
+.scard .stt{font-family:"Noto Serif KR";font-size:15px;color:var(--text);margin-top:7px;}
+.scard.hot .stt{color:var(--silver-hi);}
+.scard .sdd{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6;}
+.scard .skw{font-size:11px;color:var(--silver-lo);margin-top:11px;letter-spacing:.01em;}
+
+/* emotional anchor (background-image driven) */
+.emo{position:relative;padding:118px 0;text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background-image:linear-gradient(180deg,rgba(10,14,20,.70),rgba(10,14,20,.90)),url('assets/ssecar-bg-trust.jpg');
+  background-size:cover;background-position:center;}
+.emo .ek{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--silver);font-weight:600;margin-bottom:22px;}
+.emo h2{font-size:27px;font-weight:400;line-height:1.5;}
+.emo .ed{margin:24px auto 0;font-size:14.5px;color:var(--text-dim);font-weight:300;line-height:1.9;max-width:440px;}
+
+/* channel tag pills (expansion roadmap) */
+.ctag{display:inline-block;font-size:10.5px;letter-spacing:.03em;color:var(--silver-lo);background:rgba(195,205,218,.06);border:1px solid var(--line);border-radius:20px;padding:4px 10px;margin:7px 6px 0 0;}
+.ctag.b2b{color:var(--silver-hi);border-color:var(--line-2);background:rgba(195,205,218,.10);}
+
+/* faq */
+.faq details{border-bottom:1px solid var(--line);padding:3px 0;}
+.faq summary{list-style:none;cursor:pointer;padding:19px 0;font-family:"Noto Serif KR";font-size:15.5px;color:var(--text);display:flex;justify-content:space-between;gap:16px;align-items:flex-start;}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary .pl{color:var(--silver);font-size:20px;font-weight:300;transition:transform .35s var(--ease);flex:none;line-height:1.4;}
+.faq details[open] summary .pl{transform:rotate(45deg);}
+.faq .fa{font-size:13.5px;color:var(--text-dim);line-height:1.8;padding:0 0 21px;font-weight:300;}
+
+/* CTA */
+.cta{padding:108px 0 124px;}
+.cta h2{font-size:27px;font-weight:400;line-height:1.45;}
+.cta .cd{margin-top:22px;font-size:15px;color:var(--text-dim);font-weight:300;line-height:1.85;}
+.ctacard{margin-top:32px;border:1px solid var(--line-2);border-radius:16px;background:linear-gradient(160deg,#171E29,#0C111A);padding:25px 23px;}
+.ctacard .ci{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--silver);font-weight:600;margin-bottom:14px;}
+.ctacard .cr{display:flex;gap:12px;align-items:center;padding:10px 0;font-size:14px;color:var(--text-dim);}
+.ctacard .cr .k{color:var(--silver);font-family:"Cormorant Garamond";font-style:italic;font-size:17px;min-width:18px;}
+.ctabtn{margin-top:22px;width:100%;display:block;text-align:center;background:linear-gradient(90deg,#8b96a4,#e2e8ef);color:#0d1118;font-family:"Pretendard";font-weight:700;font-size:15px;letter-spacing:.02em;padding:17px;border-radius:13px;text-decoration:none;border:none;}
+
+footer{padding:40px 0 60px;text-align:center;border-top:1px solid var(--line);}
+footer .fb{font-size:13px;letter-spacing:.42em;color:var(--silver);text-transform:uppercase;font-weight:600;}
+footer .fsig{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:17px;color:var(--silver-hi);letter-spacing:.02em;margin-top:9px;}
+footer .fs{font-size:11.5px;color:var(--muted-2);margin-top:14px;line-height:1.8;}
+footer .fbiz{max-width:360px;margin:22px auto 0;padding-top:18px;border-top:1px solid var(--line);font-size:11px;color:var(--muted-2);line-height:1.9;letter-spacing:.01em;}
+
+@media (min-width:620px){
+  :root{--maxw:600px;}
+  .hero h1{font-size:45px;}
+  h2{font-size:29px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== 1. HERO ===================== -->
+<section class="hero">
+  <div class="wrap">
+    <div class="brandline r in">SSECAR · 차량관리 전문</div>
+    <h1 class="r in d1">
+      작업은 이미<br>증명됐습니다.<br>
+      <span class="b">이제, 검색 화면 차례입니다.</span>
+    </h1>
+    <p class="sub r in d2">
+      포르쉐도, 벤츠도 쌔카를 거쳐 갔습니다.<br>
+      리뷰 64건과 수십 건의 시공 사례 — 실력의 증거는 충분합니다.<br>
+      이제 한 가지만 더 또렷하게 — <span class="sv">차를 맡기기 전, 고객이 보는 화면입니다.</span>
+    </p>
+    <div class="tag r in d3"><span class="dot"></span> 검색 · 사진 · 후기 · 문의 동선 정비 제안</div>
+    <div class="scrollcue r in d4"><span class="ln"></span> Scroll</div>
+  </div>
+</section>
+
+<!-- ===================== IMAGE BREAK · 전후 ===================== -->
+<section class="bleed">
+  <figure class="ph wide" data-file="assets/ssecar-01.jpg">
+    <div class="ph-inner">
+      <span class="ph-tag">Image Break</span>
+      <svg class="ph-ic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M12 5v14"/><circle cx="7.5" cy="10" r="1.4"/><path d="M15 15l3-3 3 3"/></svg>
+      <div class="ph-name">assets/ssecar-01.jpg</div>
+      <div class="ph-cap">대표 전후 비교 — 동일 차량 (좌 BEFORE · 우 AFTER), 풀블리드</div>
+    </div>
+  </figure>
+</section>
+
+<!-- ===================== 감정 anchor · 맡긴다는 것 ===================== -->
+<section class="emo bleed">
+  <div class="wrap">
+    <div class="ek r">맡긴다는 것</div>
+    <h2 class="r d1">키를 건넨다는 건,<br>하루를 맡긴다는 뜻입니다.</h2>
+    <p class="ed r d2">
+      출근길에 맡긴 차를, 퇴근길에 다시 받습니다.
+      그 사이 고객은 쌔카를 믿고 자기 하루를 비웁니다.
+      그 믿음에 답하는 건 실력이고 —
+      그 믿음을 얻는 건, <span class="sv">맡기기 전 보이는 화면</span>입니다.
+    </p>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 2. 현재 상태 진단 ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">현재 상태 진단</div>
+    <h2 class="r d1">실력은 충분합니다.<br>검색 화면은 더 선명해질 수 있습니다.</h2>
+    <p class="note r d2" style="margin:18px 0 28px;">
+      쌔카의 작업은 이미 최고 수준입니다. 남은 건 실력이 아니라,
+      고객이 차를 맡기기 전 만나는 <span class="sv">화면을 더 또렷하게 다듬는 일</span>입니다.
+    </p>
+
+    <p class="lead r d2" style="margin-bottom:14px;">이어지는 자산</p>
+    <div class="facts r d2">
+      <div class="fact keep"><div class="ix">＋</div><div><div class="tt">럭셔리카 전후 사진 다수</div><div class="ds">포르쉐·벤츠·BMW·Jeep까지 쌓인 시공 기록.</div></div></div>
+      <div class="fact keep"><div class="ix">＋</div><div><div class="tt">★4.42 · 리뷰 64 · 블로그 29</div><div class="ds">하루아침에 만들 수 없는 신뢰의 근거.</div></div></div>
+      <div class="fact keep"><div class="ix">＋</div><div><div class="tt">전문 시공 라인업</div><div class="ds">스팀세차·광택·유리막·PPF·실내크리닝.</div></div></div>
+      <div class="fact keep"><div class="ix">＋</div><div><div class="tt">연간회원 관리제</div><div class="ds">한 번이 아니라 계속 맡기는 구조.</div></div></div>
+    </div>
+
+    <p class="lead r d3" style="margin:28px 0 14px;">더 또렷해질 화면</p>
+    <div class="facts r d3">
+      <div class="fact lack"><div class="ix">→</div><div><div class="tt">구글·AI 공식 근거 정리</div><div class="ds">구글·AI가 참고할 매장 정보를 모으면 더 또렷해집니다.</div></div></div>
+      <div class="fact lack"><div class="ix">→</div><div><div class="tt">가격을 텍스트로 정리</div><div class="ds">사진 속 가격을 글로 옮기면 검색·모바일에서 잘 보입니다.</div></div></div>
+      <div class="fact lack"><div class="ix">→</div><div><div class="tt">전후 사진을 결론부터</div><div class="ds">흩어진 사진을 모으면 더 강한 자산이 됩니다.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 3. 고객 불안 구조 (인터랙티브 퍼널) ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">고객의 머릿속</div>
+    <h2 class="r d1">차를 맡기기 전,<br>고객은 여러 화면을 지납니다.</h2>
+    <p class="note r d2" style="margin-bottom:42px;">
+      내 차를 맡기는 일은, 결국 믿음을 맡기는 일입니다.
+      그 사이 화면이 흐리면, 손님은 단계마다 조용히 빠집니다.
+      <span class="sv">아래 ‘흐림 / 선명’을 직접 바꿔 보세요.</span>
+    </p>
+
+    <div class="cfn r d2">
+      <div class="cfn__in">
+        <div class="cfn__switch" role="group" aria-label="화면 상태 전환">
+          <button type="button" data-state="dim" aria-pressed="true">흐림</button>
+          <button type="button" data-state="clear" aria-pressed="false">선명</button>
+        </div>
+
+        <ol class="cfn__stages" id="cfnStages">
+          <li class="cfn__stage" style="--wd:100%;--wc:100%">
+            <div class="cfn__bar"><span class="cfn__name">검색에서 발견</span></div>
+            <span class="cfn__leak" aria-hidden="true"></span>
+          </li>
+          <li class="cfn__stage" style="--wd:84%;--wc:96%">
+            <div class="cfn__bar"><span class="cfn__name">사진 첫 장</span></div>
+            <span class="cfn__leak">전후가 결론부터 안 보임</span>
+          </li>
+          <li class="cfn__stage" style="--wd:70%;--wc:93%">
+            <div class="cfn__bar"><span class="cfn__name">가격 확인</span></div>
+            <span class="cfn__leak">가격이 ‘사진 참조’뿐</span>
+          </li>
+          <li class="cfn__stage" style="--wd:56%;--wc:90%">
+            <div class="cfn__bar"><span class="cfn__name">후기 첫 줄</span></div>
+            <span class="cfn__leak">내 차종 사례가 안 보임</span>
+          </li>
+          <li class="cfn__stage" style="--wd:42%;--wc:87%">
+            <div class="cfn__bar"><span class="cfn__name">구글 · AI</span></div>
+            <span class="cfn__leak">구글 정보가 아직 적음</span>
+          </li>
+          <li class="cfn__stage cfn__stage--goal" style="--wd:28%;--wc:82%">
+            <div class="cfn__bar"><span class="cfn__name">문의</span></div>
+            <span class="cfn__leak" aria-hidden="true"></span>
+          </li>
+        </ol>
+
+        <div class="cfn__cap" id="cfnCap" aria-live="polite">
+          <p class="capdim">화면이 흐리면, 단계마다 손님이 조용히 빠집니다.</p>
+          <p class="capclear">화면이 선명하면, 더 많은 손님이 <b>끝까지 옵니다.</b></p>
+        </div>
+      </div>
+    </div>
+
+    <p class="note r d3" style="margin-top:38px;">
+      제안서의 역할은 화려한 약속이 아니라,
+      <span class="sv">단계마다 좁아지지 않게, 화면을 선명하게 만들어 두는 일</span>입니다.
+    </p>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 4. 검색 첫인상 + AI 증거 ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">검색 첫인상</div>
+    <h2 class="r d1">고객은 이제,<br>AI에게도 묻습니다.</h2>
+    <p class="note r d2" style="margin-bottom:26px;">
+      30·40대 차주도 ‘동탄 광택 잘하는 곳’을 AI에게 묻습니다.
+      그리고 AI는 <span class="sv">이미 쌔카를 설명하고 있습니다.</span>
+    </p>
+
+    <div class="aimock r d2">
+      <div class="aibar"><span class="dotr r1"></span><span class="dotr r2"></span><span class="dotr r3"></span><span class="ttl">AI 검색 화면</span></div>
+      <div class="uq"><div class="b">동탄에서 세차·광택 잘하는 곳 추천해줘</div></div>
+      <div class="ans">
+        <div class="avt"></div>
+        <div class="body">
+          <span class="h">쌔카스팀세차 화성동탄점</span>은 프리미엄 스팀세차·광택·유리막 코팅·실내크리닝을 전문으로 하는 차량 관리 업체입니다.
+          <div class="airec">
+            <div class="airow"><span class="n">·</span><div><b>주소</b> 경기 화성시 노작로4길 (반송동)</div></div>
+            <div class="airow"><span class="n">·</span><div><b>서비스</b> 스팀세차·광택·유리막·실내크리닝</div></div>
+          </div>
+          <div class="src">온라인 정보 출처 — 당근 · 네이버 블로그</div>
+          <span style="display:block;margin-top:12px;">정확한 가격은 매장 정보를 함께 확인해 보세요<span class="cursor"></span></span>
+        </div>
+      </div>
+      <div class="mocknote">＊ 실제 구글 AI 개요 화면을 단순화한 예시입니다. 캡처본(assets/ssecar-02.jpg)을 이 자리에 그대로 넣을 수 있습니다.</div>
+    </div>
+
+    <div class="card r d3" style="margin-top:22px;">
+      <p class="lead" style="font-size:15px;">
+        핵심은 <span class="sv">AI가 누구를 추천하느냐</span>가 아닙니다.
+        쌔카가 그 답에 들어갈 <span class="sv">공식 근거를 온라인에 갖추는 것</span>입니다.
+      </p>
+      <p class="small" style="margin-top:14px;">
+        지금 AI는 당근·블로그에 있는 정보를 모아 쌔카를 설명합니다. 구글 지도·홈페이지·정리된 리뷰 같은
+        공식 근거를 함께 마련하면, AI와 구글이 쌔카를 더 정확하게 안내합니다. 이번 작업은 노출을 사는 일이 아니라,
+        AI와 구글이 참고할 근거를 정리하는 일입니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 5. 검색 동선 flow ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">고객의 동선</div>
+    <h2 class="r d1">발견하고, 확인하고,<br>비교한 뒤 맡깁니다.</h2>
+    <p class="note r d2" style="margin-bottom:34px;">
+      네이버는 발견의 출발점입니다. 확신이 안 선 차주는 구글에서 다시 확인하고,
+      AI에게 한 번 더 묻습니다. 쌔카는 그 모든 화면에서 <span class="sv">같은 매장</span>으로 보여야 합니다.
+    </p>
+    <div class="flow r d2">
+      <div class="fstep">
+        <div class="frail"><div class="fnode"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg></div><div class="fconn"></div></div>
+        <div class="fbody"><div class="lb">Naver</div><div class="ti">네이버 — 발견</div><div class="de">처음 이름과 위치를 만나는 곳.</div></div>
+      </div>
+      <div class="fstep">
+        <div class="frail"><div class="fnode"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="10" r="1.5"/><path d="M14 15l3-3 3 3"/></svg></div><div class="fconn"></div></div>
+        <div class="fbody"><div class="lb">Photo · Review</div><div class="ti">사진·후기 — 확인</div><div class="de">전후 결과와 후기를 눈으로 본다.</div></div>
+      </div>
+      <div class="fstep">
+        <div class="frail"><div class="fnode"><svg viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg></div><div class="fconn"></div></div>
+        <div class="fbody"><div class="lb">Google</div><div class="ti">구글 지도 — 재확인</div><div class="de">위치·영업·평점을 다시 본다.</div></div>
+      </div>
+      <div class="fstep">
+        <div class="frail"><div class="fnode"><svg viewBox="0 0 24 24"><path d="M12 3l2 5 5 .5-3.8 3.4 1.2 5L12 19l-4.6 2.9 1.2-5L4.8 8.5 10 8z"/></svg></div><div class="fconn"></div></div>
+        <div class="fbody"><div class="lb">AI Search</div><div class="ti">AI 검색 — 추천 근거</div><div class="de">정리된 신호로 후보에 든다.</div></div>
+      </div>
+      <div class="fstep">
+        <div class="frail"><div class="fnode"><svg viewBox="0 0 24 24"><path d="M4 9l8-5 8 5v9a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M9 20v-6h6v6"/></svg></div><div class="fconn"></div></div>
+        <div class="fbody"><div class="lb">Homepage</div><div class="ti">홈페이지 — 공식 기준점</div><div class="de">모든 정보가 만나는 한 곳.</div></div>
+      </div>
+      <div class="fstep last">
+        <div class="frail"><div class="fnode"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-11"/></svg></div></div>
+        <div class="fbody"><div class="lb">Reserve</div><div class="ti">예약 — 전환</div><div class="de">불안이 사라진 자리에 예약이 남는다.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 동탄 / 수입차 / AI 데이터 ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">동탄이라는 무대</div>
+    <h2 class="r d1">화성은 젊고,<br>차에 돈을 씁니다.</h2>
+    <p class="note r d2" style="margin:18px 0 28px;">
+      동탄을 중심으로 100만을 돌파한 화성은, 전국에서 가장 젊고 구매력 높은 도시 중 하나입니다.
+      젊은 차주일수록 차 맡길 곳을 더 깐깐하게 — 그리고 <span class="sv">온라인으로</span> — 고릅니다.
+    </p>
+
+    <div class="data r d2">
+      <div class="dcard"><div class="dnum" data-to="100">0<span class="u">만</span></div><div class="dlb">화성시 인구</div><div class="dsrc">전국 5번째 특례시 · 인구 자연증가 1위</div></div>
+      <div class="dcard"><div class="dnum" data-to="39">0<span class="u">세</span></div><div class="dlb">화성 평균연령</div><div class="dsrc">39세 전후 · 전국 평균보다 젊은 도시</div></div>
+      <div class="dcard"><div class="dnum" data-to="68.9" data-dec="1">0<span class="u">%</span></div><div class="dlb">화성 재정자립도</div><div class="dsrc">전국 기초지자체 1위 · 구매력 상위</div></div>
+      <div class="dcard"><div class="dnum" data-to="30.7" data-dec="1">0<span class="u">만대</span></div><div class="dlb">수입차 신규등록</div><div class="dsrc">2025년 · 전년 대비 +16.7%</div></div>
+      <div class="dcard"><div class="dnum" data-to="68.6" data-dec="1">0<span class="u">%</span></div><div class="dlb">AI 검색 20~40대 비중</div><div class="dsrc">ChatGPT 국내 이용자 기준</div></div>
+      <div class="dcard wide"><div class="dnum" data-to="2031">0<span class="u">만 명</span></div><div class="dlb">ChatGPT 국내 월간 사용자(MAU)</div><div class="dsrc">2025년 8월 기준 · 젊은 차주가 ‘광택 잘하는 곳’을 AI로 검증한다</div></div>
+    </div>
+
+    <p class="note r d3" style="margin-top:26px;">
+      젊고 구매력 있는 차주가, 수입차를 몰고, 점점 온라인으로 차 맡길 곳을 고릅니다.
+      이 흐름을 미리 정리해 두면, <span class="sv">그만큼 앞서갈 수 있습니다.</span>
+    </p>
+    <p class="small r d3" style="margin-top:16px;color:var(--muted-2);">
+      출처 — 화성특례시 관련 보도자료 및 언론 보도, KAIDA 수입차 신규등록 통계, 와이즈앱·리테일 ChatGPT 앱 사용자 조사 기준.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== IMAGE BREAK · 차종별 시공 실적 ===================== -->
+<section class="block" style="padding-top:30px;">
+  <div class="wrap">
+    <div class="kicker r">쌔카를 거쳐 간 차들</div>
+    <h2 class="r d1" style="margin-bottom:24px;">실적이, 곧 신뢰입니다.</h2>
+    <div class="pf-grid r d2">
+      <figure class="ph" data-file="assets/ssecar-p1.jpg"><div class="ph-inner"><svg class="ph-ic" viewBox="0 0 24 24"><path d="M3 13l2-5h14l2 5"/><path d="M3 13v4h18v-4"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><div class="ph-name">ssecar-p1.jpg</div><div class="ph-cap">포르쉐 광택</div></div></figure>
+      <figure class="ph" data-file="assets/ssecar-p2.jpg"><div class="ph-inner"><svg class="ph-ic" viewBox="0 0 24 24"><path d="M3 13l2-5h14l2 5"/><path d="M3 13v4h18v-4"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><div class="ph-name">ssecar-p2.jpg</div><div class="ph-cap">벤츠 유리막</div></div></figure>
+      <figure class="ph" data-file="assets/ssecar-p3.jpg"><div class="ph-inner"><svg class="ph-ic" viewBox="0 0 24 24"><path d="M3 13l2-5h14l2 5"/><path d="M3 13v4h18v-4"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><div class="ph-name">ssecar-p3.jpg</div><div class="ph-cap">BMW 스팀세차</div></div></figure>
+      <figure class="ph" data-file="assets/ssecar-p4.jpg"><div class="ph-inner"><svg class="ph-ic" viewBox="0 0 24 24"><path d="M3 13l2-5h14l2 5"/><path d="M3 13v4h18v-4"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><div class="ph-name">ssecar-p4.jpg</div><div class="ph-cap">Jeep 실내크리닝</div></div></figure>
+      <figure class="ph" data-file="assets/ssecar-p5.jpg"><div class="ph-inner"><svg class="ph-ic" viewBox="0 0 24 24"><path d="M3 13l2-5h14l2 5"/><path d="M3 13v4h18v-4"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><div class="ph-name">ssecar-p5.jpg</div><div class="ph-cap">휠·타이어 디테일</div></div></figure>
+      <figure class="ph" data-file="assets/ssecar-p6.jpg"><div class="ph-inner"><svg class="ph-ic" viewBox="0 0 24 24"><path d="M3 13l2-5h14l2 5"/><path d="M3 13v4h18v-4"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><div class="ph-name">ssecar-p6.jpg</div><div class="ph-cap">PPF·보호필름</div></div></figure>
+    </div>
+    <p class="small r d3" style="margin-top:18px;">＊ 블로그에 보유한 차종별 시공 사진을 시공 종류별로 정리해 이 자리에 배치합니다.</p>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 6. 사진 / 전후 비교 신뢰 (FLAGSHIP) ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">가장 강한 자산</div>
+    <h2 class="r d1">세차가 아니라,<br>‘전후의 차이’를 보고 안심합니다.</h2>
+    <p class="note r d2" style="margin:18px 0 26px;">
+      쌔카는 이미 그 사진을 갖고 있습니다 —
+      다만 <span class="sv">결론부터 보여주지 않고</span> 있을 뿐입니다.
+    </p>
+
+    <div class="ba r d2">
+      <figure class="ph" data-file="assets/ssecar-before.jpg"><div class="ph-inner"><span class="ph-tag">Before</span><svg class="ph-ic" viewBox="0 0 24 24"><path d="M3 13l2-5h14l2 5"/><path d="M3 13v4h18v-4"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><div class="ph-name">ssecar-before.jpg</div></div></figure>
+      <figure class="ph" data-file="assets/ssecar-after.jpg"><div class="ph-inner"><span class="ph-tag">After</span><svg class="ph-ic" viewBox="0 0 24 24"><path d="M3 13l2-5h14l2 5"/><path d="M3 13v4h18v-4"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><div class="ph-name">ssecar-after.jpg</div></div></figure>
+    </div>
+
+    <p class="lead r d3" style="margin:26px 0 14px;">정비할 세 가지</p>
+    <div class="facts r d3">
+      <div class="fact"><div class="ix">01</div><div><div class="tt">전후를 결론부터 (두괄식)</div><div class="ds">블로그·플레이스 상단에 전후 비교를 먼저 띄운다.</div></div></div>
+      <div class="fact"><div class="ix">02</div><div><div class="tt">차종·시공별 정리</div><div class="ds">고객이 ‘내 차 사례’를 빠르게 찾게 한다.</div></div></div>
+      <div class="fact"><div class="ix">03</div><div><div class="tt">모든 채널 대표 사진 통일</div><div class="ds">네이버·구글·홈페이지를 전후 비교 중심으로.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 7. 리뷰 구조 ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">신뢰의 마지막 검증</div>
+    <h2 class="r d1">후기 64건은, 하루아침에<br>만들 수 없는 신뢰입니다.</h2>
+
+    <div class="stats r d2" style="margin:26px 0 26px;">
+      <div class="stat"><div class="sn" data-to="4.42" data-dec="2">0</div><div class="sl">네이버 평점</div></div>
+      <div class="stat"><div class="sn" data-to="64">0</div><div class="sl">방문자 리뷰</div></div>
+      <div class="stat"><div class="sn" data-to="29">0</div><div class="sl">블로그 리뷰</div></div>
+    </div>
+
+    <p class="note r d2" style="margin-bottom:20px;">
+      기반은 이미 충분합니다. 이제 이 후기가 <span class="sv">‘내 차종 사례’로 정리되어</span> 보이게만 하면 됩니다.
+    </p>
+    <ul class="fixlist r d3">
+      <li>시공 종류·차종별로 후기를 큐레이션해 노출</li>
+      <li>시공 직후 자연 적립되는 리뷰 흐름(QR·현장 전환) 설계</li>
+      <li>후기 ↔ 전후 사진 ↔ 가격을 하나의 흐름으로 연결</li>
+    </ul>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 8. 네이버 플레이스 ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">발견의 출발점</div>
+    <h2 class="r d1">네이버는,<br>이미 잘 살아 있습니다.</h2>
+    <div class="card r d2" style="margin:24px 0 22px;">
+      <span class="chip ok">● 현황 양호</span>
+      <p class="note" style="margin-top:14px;">
+        ★4.42 · 리뷰 64건. 발견 채널로서의 기반은 충분합니다.
+        보완은 ‘새로 만드는 일’이 아니라 ‘정리하는 일’입니다.
+      </p>
+    </div>
+    <ul class="fixlist r d3">
+      <li>업종·키워드·소식 정비 (동탄·광택·유리막·실내크리닝)</li>
+      <li>‘사진 참조’ 가격 → <b style="color:var(--silver-hi)">텍스트 가격표</b>로 전환</li>
+      <li>대표 사진을 전후 비교 중심으로 교체</li>
+      <li>시즌 키워드 소식으로 발견 빈도 유지</li>
+    </ul>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 9. 구글 비즈니스 ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">다음 한 걸음</div>
+    <h2 class="r d1">네이버는 잘 되어 있고,<br>구글은 이제 채울 차례입니다.</h2>
+    <div class="card r d2" style="margin:24px 0 22px;">
+      <span class="chip gap">구글 보완 단계</span>
+      <p class="note" style="margin-top:14px;">
+        구글 비즈니스 프로필을 함께 마련하면, 구글과 AI가 쌔카를 <span class="sv">더 정확하게 안내</span>합니다.
+        네이버에서 쌓은 신뢰를, 구글에서도 그대로 보여주는 단계입니다.
+      </p>
+    </div>
+    <ul class="fixlist r d3">
+      <li>구글 비즈니스 프로필 <b style="color:var(--silver-hi)">신규 생성 · 인증</b></li>
+      <li>위치·영업시간·카테고리·대표 사진 정비</li>
+      <li>AI와 구글이 읽을 ‘공식 근거’ 구조화</li>
+      <li>네이버·구글·블로그·당근 정보 일치</li>
+    </ul>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 10. 콘텐츠 / SNS ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">검색 밖의 관심</div>
+    <h2 class="r d1">검색되는 매장에서,<br>이야기되는 매장으로.</h2>
+    <p class="note r d2" style="margin:18px 0 22px;">
+      검색은 ‘찾으러 온 고객’을 받습니다. 콘텐츠는 ‘아직 안 찾은 고객’에게
+      <span class="sv">먼저 가닿는</span> 채널입니다.
+    </p>
+    <ul class="fixlist r d3">
+      <li>인스타 — 시공 비주얼·전후 릴스로 작업력 전달</li>
+      <li>스레드 — 짧은 글로 ‘운영 중·신뢰’ 신호 누적</li>
+      <li>저장·공유를 부르는 비포애프터 포인트 설계</li>
+      <li>블로그 — 시공 사례를 두괄식(전후 먼저)으로 재구성</li>
+    </ul>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 11. 문의 전환 동선 ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">마지막 1cm</div>
+    <h2 class="r d1">결정을 못 해서가 아니라,<br>묻기 전에 불안해서 안 누릅니다.</h2>
+    <p class="note r d2" style="margin:18px 0 22px;">
+      많은 고객이 ‘문의’ 직전에서 떠납니다. 물어보기 전에 답이 보이면,
+      <span class="sv">문의가 늘어납니다.</span>
+    </p>
+    <ul class="fixlist r d3">
+      <li>검색 질문형 FAQ — “이 상태면 얼마?” “예약 필수?” “소요 시간?”</li>
+      <li>부담 낮은 진입로 — “사진 보내면 견적” 동선</li>
+      <li>전화·카톡·예약, 다음 행동을 명확히 안내</li>
+      <li>발견 → 문의 → 방문이 끊기지 않게 연결</li>
+    </ul>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 12. 30 / 60 / 90일 로드맵 ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">90일 로드맵</div>
+    <h2 class="r d1">한 번 세팅이 아니라,<br>단계적 정비.</h2>
+    <p class="note r d2" style="margin:18px 0 32px;">
+      검색·사진·후기·문의는 한 번에 끝나지 않습니다.
+      같은 기준으로 <span class="sv">단계적으로 맞춰질 때</span> 흔들리지 않습니다.
+    </p>
+    <div class="road r d2">
+      <div class="rstep">
+        <div class="rrail"><div class="rtag">D~30</div><div class="rdot"></div><div class="rconn"></div></div>
+        <div class="rbody"><div class="rt">기초 정비</div><div class="rd">네이버·구글(GBP) 정비, 가격 텍스트화, 전후 사진 1차 재배치, 홈페이지 1차 구축.</div></div>
+      </div>
+      <div class="rstep">
+        <div class="rrail"><div class="rtag">D~60</div><div class="rdot"></div><div class="rconn"></div></div>
+        <div class="rbody"><div class="rt">신뢰 축적</div><div class="rd">차종·시공별 포트폴리오 구조화, 리뷰 흐름 세팅, FAQ 정비, 채널 정보 일치.</div></div>
+      </div>
+      <div class="rstep">
+        <div class="rrail"><div class="rtag">D~90</div><div class="rdot"></div><div class="rconn"></div></div>
+        <div class="rbody"><div class="rt">검색·전환 완성</div><div class="rd">AI 검색 화면 점검, 동탄 키워드 구조화, 문의·예약 동선 정돈.</div></div>
+      </div>
+      <div class="rstep">
+        <div class="rrail"><div class="rtag">이후</div><div class="rdot" style="border-color:var(--silver);background:var(--silver)"></div></div>
+        <div class="rbody"><div class="rt">월간 유지 · 보완</div><div class="rd">정보 최신화, AI·구글 화면 점검, 간단 리포트로 같은 기준 유지.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 계절 대응 광고 전략 ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">계절은 곧 수요입니다</div>
+    <h2 class="r d1">장마가 오기 전에,<br>검색이 먼저 옵니다.</h2>
+    <p class="note r d2" style="margin:18px 0 24px;">
+      차주의 고민은 계절마다 바뀝니다. 그리고 그 고민은 늘 <span class="sv">검색으로 먼저</span> 나타납니다.
+      1년 운영은, 이 계절 수요를 미리 깔아 두는 일입니다.
+    </p>
+
+    <figure class="ph wide r d2" data-file="assets/ssecar-season.jpg" style="margin-bottom:24px;">
+      <div class="ph-inner">
+        <span class="ph-tag">Season</span>
+        <svg class="ph-ic" viewBox="0 0 24 24"><path d="M7 17a4 4 0 010-8 5 5 0 019.6-1.5A3.5 3.5 0 1118 17z"/><path d="M8 20l-1 2M12 20l-1 2M16 20l-1 2"/></svg>
+        <div class="ph-name">assets/ssecar-season.jpg</div>
+        <div class="ph-cap">장마 비주얼 — 코팅면 빗방울 발수(water beading) 클로즈업</div>
+      </div>
+    </figure>
+
+    <div class="season r d2">
+      <div class="scard hot">
+        <div class="sk">장마 · 여름</div>
+        <div class="stt">빗길 시야 · 실내 습기</div>
+        <div class="sdd">유리막·발수 코팅, 실내 항균 스팀, 워터스팟 제거 수요가 몰리는 시기.</div>
+        <div class="skw">↑ ‘유리막 코팅 동탄’ 검색 급등 구간</div>
+      </div>
+      <div class="scard">
+        <div class="sk">가을</div>
+        <div class="stt">미세먼지 · 신차 출고</div>
+        <div class="sdd">황사·미세먼지 후 광택, 새 차 출고 광택·코팅 문의가 늘어나는 시기.</div>
+        <div class="skw">↑ ‘신차 광택’ 관심 상승</div>
+      </div>
+      <div class="scard">
+        <div class="sk">겨울</div>
+        <div class="stt">염화칼슘 · 하부 부식</div>
+        <div class="sdd">언더코팅·하부 세차, 발수 유지, 제설제 부식 대비 수요가 생기는 시기.</div>
+        <div class="skw">↑ ‘언더코팅 동탄’ 검색 시작</div>
+      </div>
+      <div class="scard">
+        <div class="sk">봄</div>
+        <div class="stt">꽃가루 · 황사</div>
+        <div class="sdd">꽃가루·황사 제거 세차, 봄맞이 광택·실내크리닝 수요가 오르는 시기.</div>
+        <div class="skw">↑ 세차·광택 성수기 진입</div>
+      </div>
+    </div>
+
+    <p class="note r d3" style="margin-top:26px;">
+      계절마다 콘텐츠와 검색 화면을 미리 깔아 두면, 수요가 올 때 그 검색이 쌔카로 옵니다.
+      <span class="sv">한 번 세팅(A안)보다 1년 운영(B안)이 강한 이유</span>가 여기 있습니다.
+    </p>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 13. 가격 — 앵커링 ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">비용을 다시 봅니다</div>
+    <h2 class="r d1">각각 따로 맡기면,<br>이미 매달 이만큼 나갑니다.</h2>
+    <p class="note r d2" style="margin:18px 0 24px;">
+      아래는 항목을 개별 외주로 진행할 때의 일반적인 시장가 범위입니다.
+    </p>
+    <div class="atable r d2">
+      <div class="arow"><span class="ak">매장 공식 안내 페이지(홈페이지) 제작</span><span class="av">100~250만 (1회)</span></div>
+      <div class="arow"><span class="ak">네이버 플레이스 정비 · 운영</span><span class="av">25~40만</span></div>
+      <div class="arow"><span class="ak">블로그 · 후기 콘텐츠</span><span class="av">40~70만</span></div>
+      <div class="arow"><span class="ak">구글 비즈니스 · 검색 세팅</span><span class="av">15~30만</span></div>
+      <div class="arow"><span class="ak">인스타그램 기본 운영</span><span class="av">30~60만</span></div>
+      <div class="arow"><span class="ak">디자인 카드 · 가격표 · 이벤트 이미지</span><span class="av">20~50만</span></div>
+      <div class="arow"><span class="ak">리뷰 QR · 현장 전환 장치</span><span class="av">세팅형</span></div>
+      <div class="arow"><span class="ak">리포트 · 전략 관리</span><span class="av">20~30만</span></div>
+    </div>
+    <div class="asum r d3">
+      각각 따로 맡기면 <b>월 150만 원 이상</b>으로 흩어질 수 있습니다.
+      Weplace는 쌔카를 계속 보는 구조로 묶어, <b>하나의 흐름으로 통합 관리</b>합니다.
+    </div>
+    <p class="small r d3" style="margin-top:14px;">
+      ＊ 위 금액은 개별 외주 시의 일반적 시장가 범위로, 이해를 돕기 위한 참고치입니다.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== 가격 카드 ===================== -->
+<section class="block anchor" style="padding-top:24px;">
+  <div class="wrap">
+    <h2 class="r" style="margin-bottom:32px;line-height:1.45;">
+      <span style="color:var(--muted);font-weight:300;">광고비가 아니라,</span><br>
+      맡기기 전 신뢰 화면을 세우는 비용입니다.
+    </h2>
+
+    <div class="tiers">
+      <!-- A -->
+      <div class="tier r d1">
+        <div class="tg">A · 최소 집중형</div>
+        <div class="tn">90일 검색·신뢰 세팅</div>
+        <div class="price"><span class="amt">390</span><span class="per">만 원</span><span class="vat">+ VAT</span></div>
+        <div class="desc">기존에 쌓인 작업력과 후기 자산을 다시 정리하는 90일 세팅입니다. 단순 게시물 운영이 아니라, 네이버·구글·가격표·전후 사진·FAQ·홈페이지 기준점을 한 번에 세우는 초기 정비 비용입니다.</div>
+        <ul>
+          <li>네이버 상호·정보·가격표 정비</li>
+          <li>구글 비즈니스 신규·인증</li>
+          <li>전후 사진 두괄식 1차 재배치</li>
+          <li>원페이지 홈페이지 1차 구축</li>
+          <li>코스·가격·FAQ 정리</li>
+          <li>인스타·스레드 문구 설계</li>
+        </ul>
+      </div>
+
+      <!-- B 추천 -->
+      <div class="tier rec r d2">
+        <div class="badge">추천</div>
+        <div class="tg">B · 동탄 검색 선점 운영형</div>
+        <div class="tn">1년 정비 + 유지·보완</div>
+        <div class="price"><span class="amt">840</span><span class="per">만 원 / 1년</span><span class="vat">+ VAT</span></div>
+        <div class="pay">결제 부담 분리 → 초기 300만 원 + 월 60만 원 × 9개월</div>
+        <div class="desc">
+          쌔카처럼 시공 사진과 후기 자산이 이미 있는 매장은, 한 번 세팅보다 <b style="color:var(--silver-hi)">유지·보완형이 더 강합니다.</b>
+          계절 수요와 검색 흐름이 계속 바뀌기 때문입니다.
+        </div>
+        <ul>
+          <li class="inc">A안 전체 포함</li>
+          <li>구글 비즈니스 프로필 고도화</li>
+          <li>홈페이지 정보 업데이트</li>
+          <li>AI 검색 화면 월간 점검</li>
+          <li>네이버·구글·SNS 정보 일치 관리</li>
+          <li>차종·시공별 후기 큐레이션</li>
+          <li>검색 질문형 FAQ 확장</li>
+          <li>동탄 키워드 정보 구조화</li>
+          <li>월간 간단 리포트</li>
+        </ul>
+      </div>
+
+      <!-- C -->
+      <div class="tier r d3">
+        <div class="tg">C · 확장형</div>
+        <div class="tn">수입차 · 프리미엄 검색 대응형</div>
+        <div class="price"><span class="amt">1,080</span><span class="per">만 원 / 1년</span><span class="vat">+ VAT</span></div>
+        <div class="desc">수입차·프리미엄 고객까지 대비하는 확장안입니다.</div>
+        <ul>
+          <li class="inc">B안 전체 포함</li>
+          <li>수입차·프리미엄 타깃 브랜딩 문구</li>
+          <li>영어 기본 페이지 (선택)</li>
+          <li>연간회원 관리제 연계 안내</li>
+          <li>PPF·유리막 등 고단가 시공 콘텐츠 강화</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="small r" style="margin-top:22px;">
+      ＊ 위 금액은 제안 기준선이며, 매장 상황·결제 방식(분기 등)에 맞춰 조정해 다시 안내드립니다.
+      AI 검색은 노출을 ‘보장’하는 광고가 아니라, AI·구글이 읽을 근거를 갖추는 기반 작업입니다.
+    </p>
+  </div>
+</section>
+
+<div class="gap-s"></div>
+
+<!-- ===================== 홈페이지 혜택 ===================== -->
+<section class="block" style="padding-top:0;padding-bottom:60px;">
+  <div class="wrap">
+    <div class="bonus r">
+      <div class="bk">B · C안 선택 혜택</div>
+      <div class="bh">공식 기준점이 될 원페이지 홈페이지를, 운영 범위에 포함합니다.</div>
+      <div class="bd">
+        1년 운영형(B·C안)에는 <span class="sv">공식 기준점이 될 원페이지 홈페이지 제작이 운영 범위에 포함</span>됩니다.
+        네이버 예약을 대체하려는 게 아니라, 네이버·구글·SNS·AI가 함께 참고할 ‘한 곳’을 갖추기 위해서입니다.
+        이 기준점이 있으면 구글과 AI가 쌔카를 같은 매장으로 더 정확하게 안내합니다.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 14. 기대 효과 ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">기대 효과</div>
+    <h2 class="r d1">방향을 잡으면,<br>기대할 수 있는 변화.</h2>
+    <div class="eff r d2" style="margin-top:26px;">
+      <div class="ecard"><div class="et">검색 신뢰 상승</div><div class="ed">네이버·구글·AI에서 ‘같은 매장’으로 보여 첫인상이 단단해짐.</div></div>
+      <div class="ecard"><div class="et">비교 이탈 감소</div><div class="ed">가격·전후가 한눈에 보여 비교 단계에서 떠나지 않음.</div></div>
+      <div class="ecard"><div class="et">문의 전환 강화</div><div class="ed">불안이 줄어든 만큼 문의·예약으로 자연스럽게 이어짐.</div></div>
+      <div class="ecard"><div class="et">후기·재방문 누적</div><div class="ed">리뷰 흐름과 연간회원으로 팬 층과 객단가가 쌓임.</div></div>
+    </div>
+    <p class="note r d3" style="margin-top:24px;">
+      과장된 약속보다, <span class="sv">맡기기 전 불안을 줄이는 구조</span>를 만드는 데 집중합니다.
+    </p>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 확장 로드맵 ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">이 비용은 끝이 아닙니다</div>
+    <h2 class="r d1">실적을 보고,<br>채널을 확장합니다.</h2>
+    <p class="note r d2" style="margin:18px 0 18px;">
+      처음부터 모든 채널을 벌이지 않습니다. 검색·신뢰 화면을 먼저 세우고,
+      <span class="sv">숫자로 검증한 뒤</span> 효과 난 채널에만 확장 투자합니다.
+    </p>
+
+    <div class="card r d2" style="margin-bottom:26px;">
+      <p class="small">
+        ＊ 참고 — 동탄(동부권역)은 외국인 비중 1% 내외이고, 화성 외국인 다수는 서부 산업단지 근로자입니다.
+        그래서 외국인 직접 타깃보다, 화성에 밀집한 <span class="sv">기업·법인차(B2B)</span>가 더 큰 기회입니다.
+        LinkedIn은 ‘외국인용’이 아니라 ‘B2B용’으로 씁니다.
+      </p>
+    </div>
+
+    <div class="road r d2">
+      <div class="rstep">
+        <div class="rrail"><div class="rtag">0단계</div><div class="rdot"></div><div class="rconn"></div></div>
+        <div class="rbody">
+          <div class="rt">검색·신뢰 화면 정비 <span style="color:var(--muted);font-size:12px;">· 지금</span></div>
+          <div class="rd">맡기기 전 불안을 줄이는 기본 화면부터 세웁니다.</div>
+          <div><span class="ctag">네이버</span><span class="ctag">GBP</span><span class="ctag">전후사진</span><span class="ctag">가격표</span></div>
+        </div>
+      </div>
+      <div class="rstep">
+        <div class="rrail"><div class="rtag">1단계</div><div class="rdot"></div><div class="rconn"></div></div>
+        <div class="rbody">
+          <div class="rt">실적 확인</div>
+          <div class="rd">어떤 키워드·채널이 실제 문의를 만드는지 숫자로 검증합니다.</div>
+          <div><span class="ctag">유입 분석</span><span class="ctag">문의 전환 측정</span></div>
+        </div>
+      </div>
+      <div class="rstep">
+        <div class="rrail"><div class="rtag">2단계</div><div class="rdot"></div><div class="rconn"></div></div>
+        <div class="rbody">
+          <div class="rt">검증된 채널 확장</div>
+          <div class="rd">효과 난 채널에 집중 투자해 ‘이야기되는 매장’으로 키웁니다.</div>
+          <div><span class="ctag">당근 정식운영</span><span class="ctag">Threads</span><span class="ctag">Instagram</span><span class="ctag">GBP 리뷰·Q&amp;A</span></div>
+        </div>
+      </div>
+      <div class="rstep">
+        <div class="rrail"><div class="rtag">3단계</div><div class="rdot" style="border-color:var(--silver);background:var(--silver)"></div></div>
+        <div class="rbody">
+          <div class="rt">B2B · 롱테일 확장 <span style="color:var(--muted);font-size:12px;">· 선택</span></div>
+          <div class="rd">법인차·딜러·기업 제휴로 객단가를 키우고, 영어 콘텐츠는 장기 롱테일로 둡니다.</div>
+          <div><span class="ctag b2b">LinkedIn · B2B/법인차</span><span class="ctag">Reddit · expat 롱테일</span></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="note r d3" style="margin-top:24px;">
+      그래서 이 제안은 ‘한 번 쓰고 끝나는 비용’이 아니라,
+      <span class="sv">실적을 확인하며 키우는 성장 시스템의 0단계</span>입니다.
+    </p>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== FAQ ===================== -->
+<section class="block anchor">
+  <div class="wrap">
+    <div class="kicker r">자주 묻는 질문</div>
+    <h2 class="r d1" style="margin-bottom:16px;">짚어 두면 좋을 것들.</h2>
+    <div class="faq r d2">
+      <details>
+        <summary>네이버와 블로그만 해도 되지 않나요?<span class="pl">＋</span></summary>
+        <div class="fa">옳은 출발점입니다. 다만 확신이 안 선 차주는 구글에서 다시 확인하고, AI에게 한 번 더 묻습니다. 그 화면이 흐릿하면, 발견한 고객을 마지막 단계에서 놓칠 수 있습니다.</div>
+      </details>
+      <details>
+        <summary>구글은 외국인만 보는 것 아닌가요?<span class="pl">＋</span></summary>
+        <div class="fa">이제 국내 차주도 구글 지도와 AI를 ‘재확인 도구’로 씁니다. 위치·평점·영업시간을 다시 확인하는 화면이 구글이고, 지금은 그 화면을 더 또렷하게 채울 수 있습니다.</div>
+      </details>
+      <details>
+        <summary>AI 검색 노출이 바로 보장되나요?<span class="pl">＋</span></summary>
+        <div class="fa">보장하지 않습니다. 광고가 아니기 때문입니다. 대신 AI와 구글이 참고할 근거(정보·리뷰·홈페이지·영업정보)를 정리하면, 추천 후보에 들어갈 가능성을 높이는 기반이 생깁니다.</div>
+      </details>
+      <details>
+        <summary>전후 사진은 이미 블로그에 있는데요?<span class="pl">＋</span></summary>
+        <div class="fa">맞습니다. 그래서 ‘새로 찍는 일’이 아니라 ‘보이게 정리하는 일’입니다. 흩어진 전후 사진을 결론부터, 차종·시공별로 묶어 고객이 ‘내 차 사례’를 바로 찾게 합니다.</div>
+      </details>
+      <details>
+        <summary>가격을 공개하면 경쟁사가 따라오지 않나요?<span class="pl">＋</span></summary>
+        <div class="fa">가격이 ‘사진 참조’로 숨어 있으면 비교 자체가 안 돼 고객이 조용히 떠납니다. 공개의 손해보다, 비교당하지 못해 잃는 고객이 더 큽니다. 가격은 ‘왜 이 값인지’와 함께 보여줄 때 선택받습니다.</div>
+      </details>
+      <details>
+        <summary>3개월만 먼저 시작할 수 있나요?<span class="pl">＋</span></summary>
+        <div class="fa">가능합니다(A안). 다만 검색 신호는 한 번 세팅하고 끝나기보다, 같은 기준으로 유지·보완될 때 흔들리지 않습니다. 그래서 1년 운영형(B안)을 권합니다.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ===================== 15. 마무리 CTA ===================== -->
+<section class="cta">
+  <div class="wrap">
+    <div class="kicker r">마지막으로</div>
+    <h2 class="r d1">
+      지금 필요한 건,<br>더 큰 광고가 아닙니다.<br>
+      <span class="sv">맡기기 전 불안을 줄이는, 화면 정리입니다.</span>
+    </h2>
+    <p class="cd r d2">
+      검색·사진·가격·후기·문의 — 고객이 차를 맡기기 전 보는 화면을 정돈하는 일입니다.
+      실력은 이미 충분하니까요. 가격표와 전후 사진, 지금 쓰시는 채널만 알려주시면
+      첫 90일 순서로 정리해 드리겠습니다.
+    </p>
+
+    <div class="ctacard r d2">
+      <div class="ci">미팅 시 정리해 드릴 것</div>
+      <div class="cr"><span class="k">1</span> 30·60·90일 작업 순서표</div>
+      <div class="cr"><span class="k">2</span> 네이버·구글·AI 현재 화면 점검 리스트</div>
+      <div class="cr"><span class="k">3</span> 권장 가격안(A·B·C)과 결제 방식 안내</div>
+      <a class="ctabtn" href="#">현재 화면 기준으로 90일 순서 잡아보기</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fb"></div>
+  <div class="fsig">We, Place.</div>
+  <div class="fs">로컬 비즈니스 검색·신뢰 화면 정비<br>대표님은 차를, Weplace는 화면을.</div>
+  <div class="fbiz">
+    사업자등록번호 145-88-03119<br>
+    서울특별시 금천구 디지털로 178, 1910호<br>
+    현대지식산업센터 가산퍼블릭 에이치
+  </div>
+</footer>
+
+<script>
+/* scroll reveal (gentle) */
+const io = new IntersectionObserver((es)=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12, rootMargin:"0px 0px -8% 0px"});
+document.querySelectorAll('.r:not(.in)').forEach(el=>io.observe(el));
+
+/* count-up numbers */
+function fmt(n,dec){ return dec ? n.toFixed(dec) : Math.round(n).toLocaleString('en-US'); }
+const numObserver = new IntersectionObserver((es)=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const el = e.target;
+    const to = parseFloat(el.dataset.to);
+    const dec = parseInt(el.dataset.dec||"0");
+    const unitHTML = el.querySelector('.u') ? el.querySelector('.u').outerHTML : "";
+    const dur = 1300; const t0 = performance.now();
+    function tick(now){
+      const p = Math.min((now-t0)/dur,1);
+      const eased = 1-Math.pow(1-p,3);
+      el.innerHTML = fmt(to*eased,dec) + unitHTML;
+      if(p<1) requestAnimationFrame(tick);
+      else el.innerHTML = fmt(to,dec) + unitHTML;
+    }
+    requestAnimationFrame(tick);
+    numObserver.unobserve(el);
+  });
+},{threshold:.6});
+document.querySelectorAll('.sn[data-to], .dnum[data-to]').forEach(el=>numObserver.observe(el));
+</script>
+
+<script>
+/* interactive customer funnel — 흐림/선명 toggle */
+(function(){
+  var stages = document.getElementById('cfnStages');
+  if(!stages) return;
+  var cap = document.getElementById('cfnCap');
+  var btns = document.querySelectorAll('.cfn__switch button');
+  function setState(state){
+    var clear = (state === 'clear');
+    stages.classList.toggle('is-clear', clear);
+    cap.classList.toggle('is-clear', clear);
+    btns.forEach(function(b){
+      b.setAttribute('aria-pressed', b.getAttribute('data-state') === state ? 'true' : 'false');
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){ setState(b.getAttribute('data-state')); });
+  });
+  setState('dim');
+})();
+</script>
+</body>
+</html>
